@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'ckeditor',
+    'ckeditor_uploader',
 
     'blog'
 ]
@@ -118,13 +120,37 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
-
 STATICFILES_DIRS = [
-    BASE_DIR / "static",
-    "/var/www/static/",
+    BASE_DIR / 'static'
 ]
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# ckeditor settings
+CKEDITOR_UPLOAD_PATH = "uploads/"  # Thư mục để lưu trữ ảnh tải lên
+CKEDITOR_IMAGE_BACKEND = "pillow"  # Dùng Pillow để xử lý ảnh
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',  # Sử dụng thanh công cụ đầy đủ
+        'width': 'auto',
+        'height': 400,
+        'extraPlugins': 'image2',  # Plugin hỗ trợ chèn ảnh
+        'toolbar_Custom': [
+            ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript'],
+            ['NumberedList', 'BulletedList', 'Outdent', 'Indent'],
+            ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+            ['Link', 'Unlink', 'Anchor'],
+            ['Image', 'Table', 'HorizontalRule', 'SpecialChar'],
+            ['Source'],
+            ['Maximize'],
+        ],
+        'filebrowserImageUploadUrl': '/ckeditor/upload/',  # Đường dẫn upload ảnh
+    },
+}

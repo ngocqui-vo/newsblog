@@ -1,5 +1,10 @@
 from django.shortcuts import render
-
+from . import models
 # Create your views here.
+
+import random
 def index(request):
-    return render(request, 'blog/index.html')
+    posts = models.Post.objects.all()[0]
+
+
+    return render(request, 'blog/index.html', context= {'post':post})

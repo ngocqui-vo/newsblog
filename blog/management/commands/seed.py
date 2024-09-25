@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User
-from blog.models import CategoryParent, Category, Post, Like, Comment, Tag
+from blog.models import CategoryParent, Category, Post, Comment, Tag
 import random
 from faker import Faker
 
@@ -10,12 +10,11 @@ class Command(BaseCommand):
     help = 'Seed data for the blog application'
 
     def handle(self, *args, **kwargs):
-        self.seed_users(10)
+        self.seed_users(5)
         self.seed_categories(5)
-        self.seed_posts(20)
-        self.seed_tags(10)
-        self.seed_likes(50)
-        self.seed_comments(50)
+        self.seed_posts(10)
+        self.seed_tags(5)
+        self.seed_comments(20)
 
     def seed_users(self, n):
         """Create n fake users."""
@@ -55,16 +54,6 @@ class Command(BaseCommand):
             random_posts = random.sample(list(posts), k=min(3, len(posts)))  # Max 3 posts per tag
             tag.posts.set(random_posts)
         self.stdout.write(self.style.SUCCESS(f'Successfully seeded {n} tags.'))
-
-    def seed_likes(self, n):
-        """Create n likes for random posts by random users."""
-        users = User.objects.all()
-        posts = Post.objects.all()
-        for _ in range(n):
-            user = random.choice(users)
-            post = random.choice(posts)
-            Like.objects.create(user=user, post=post)
-        self.stdout.write(self.style.SUCCESS(f'Successfully seeded {n} likes.'))
 
     def seed_comments(self, n):
         """Create n comments for random posts by random users."""

@@ -235,7 +235,7 @@
                 <!-- Menu desktop -->
                 <nav class="menu-desktop">
                     <a class="logo-stick" href="index.html">
-                        <img src="images/icons/logo-01.png" alt="LOGO">
+                        <img src="{% static 'images/icons/logo-01.png' %}" alt="LOGO">
                     </a>
 
                     <ul class="main-menu">
@@ -345,6 +345,9 @@
                                 </div>
                             </li>
                         {% endfor %}
+                        <li class="mega-menu-item">
+                            <a href="">Contact us</a>
+                        </li>
                     </ul>
                 </nav>
             </div>

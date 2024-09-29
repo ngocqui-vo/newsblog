@@ -19,21 +19,27 @@
 							</span>
 						</span>
 
-                    <a href="#" class="left-topbar-item">
+                    <a href="{% url 'about' %}" class="left-topbar-item">
                         About
                     </a>
 
-                    <a href="#" class="left-topbar-item">
+                    <a href="{% url 'contact_us' %}" class="left-topbar-item">
                         Contact
                     </a>
+                    {% if user.is_authenticated %}
+                        <b class="left-topbar-item">{{ user.username }}</b>
+                        <a href="{% url 'user_logout' %}" class="left-topbar-item">
+                            Log out
+                        </a>
+                    {% else %}
+                        <a href="{% url 'user_register' %}" class="left-topbar-item">
+                            Sign up
+                        </a>
 
-                    <a href="#" class="left-topbar-item">
-                        Sing up
-                    </a>
-
-                    <a href="#" class="left-topbar-item">
-                        Log in
-                    </a>
+                        <a href="{% url 'user_login' %}" class="left-topbar-item">
+                            Log in
+                        </a>
+                    {% endif %}
                 </div>
 
                 <div class="right-topbar">
@@ -225,18 +231,21 @@
                         {#							</li>#}
                         {% for cate_parent in categories_parents %}
                             <li class="mega-menu-item">
-                                <a href="">{{ cate_parent.title }}</a>
+                                <a href="">{{ cate_parent.title|capfirst }}</a>
 
                                 <div class="sub-mega-menu">
                                     <div class="nav flex-column nav-pills" role="tablist">
-                                        <a class="nav-link active" data-toggle="pill" href="#{{ cate_parent.title }}-0" role="tab">All</a>
+                                        <a class="nav-link active" data-toggle="pill" href="#{{ cate_parent.title }}-0"
+                                           role="tab">All</a>
                                         {% for category in cate_parent.category_set.all %}
-                                            <a class="nav-link" data-toggle="pill" href="#{{ cate_parent.title }}-{{ forloop.counter }}"
+                                            <a class="nav-link" data-toggle="pill"
+                                               href="#{{ cate_parent.title }}-{{ forloop.counter }}"
                                                role="tab">{{ category.title }}</a>
                                         {% endfor %}
                                     </div>
                                     <div class="tab-content">
-                                        <div class="tab-pane show active" id="{{ cate_parent.title }}-0" role="tabpanel">
+                                        <div class="tab-pane show active" id="{{ cate_parent.title }}-0"
+                                             role="tabpanel">
                                             <div class="row">
                                                 {% for category in cate_parent.category_set.all %}
                                                     {% for post in category.post_set.all %}
@@ -277,7 +286,8 @@
                                             </div>
                                         </div>
                                         {% for category in cate_parent.category_set.all %}
-                                            <div class="tab-pane" id="{{ cate_parent.title }}-{{ forloop.counter }}" role="tabpanel">
+                                            <div class="tab-pane" id="{{ cate_parent.title }}-{{ forloop.counter }}"
+                                                 role="tabpanel">
                                                 <div class="row">
                                                     {% for post in category.post_set.all %}
                                                         <div class="col-3">
@@ -321,9 +331,7 @@
                                 </div>
                             </li>
                         {% endfor %}
-                        <li class="mega-menu-item">
-                            <a href="">Contact us</a>
-                        </li>
+
                     </ul>
                 </nav>
             </div>
@@ -353,13 +361,17 @@
 					</span>
 				</span>
         </div>
+        
+        <form action="{% url 'search' %}" method="get" class="pos-relative size-a-2 bo-1-rad-22 of-hidden bocl11 m-tb-6">
+            
 
-        <div class="pos-relative size-a-2 bo-1-rad-22 of-hidden bocl11 m-tb-6">
-            <input class="f1-s-1 cl6 plh9 s-full p-l-25 p-r-45" type="text" name="search" placeholder="Search">
-            <button class="flex-c-c size-a-1 ab-t-r fs-20 cl2 hov-cl10 trans-03">
-                <i class="zmdi zmdi-search"></i>
-            </button>
-        </div>
+                <input class="f1-s-1 cl6 plh9 s-full p-l-25 p-r-45" type="text" name="q" placeholder="Search">
+                <button class="flex-c-c size-a-1 ab-t-r fs-20 cl2 hov-cl10 trans-03">
+                    <i class="zmdi zmdi-search"></i>
+                </button>
+            
+        </form>
+            
     </div>
 </div>
 		

@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from ckeditor.fields import RichTextField
-
+from bs4 import BeautifulSoup
 
 class CategoryParent(models.Model):
     title = models.CharField(max_length=100)
@@ -31,11 +31,17 @@ class Post(models.Model):
     def __str__(self) -> str:
         return self.title
 
+    def get_excerpt(self, length=100):
+        soup = BeautifulSoup(self.content, 'html.parser')
+        text = soup.get_text()
+        return text[:length]
+
 
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     content = models.CharField(max_length=1000)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f'{self.user.username} - {self.content}'

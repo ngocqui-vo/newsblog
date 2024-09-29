@@ -11,7 +11,9 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+from dotenv import load_dotenv
 import os
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,8 +42,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ckeditor',
     'ckeditor_uploader',
+    'widget_tweaks',
 
-    'blog'
+    'blog',
+    'account'
 ]
 
 MIDDLEWARE = [
@@ -71,6 +75,7 @@ TEMPLATES = [
                 'blog.context_processors.categories_parents',
                 'blog.context_processors.get_tags',
                 'blog.context_processors.get_popular_posts',
+                'blog.context_processors.get_categories',
             ],
         },
     },
@@ -107,7 +112,14 @@ DATABASES = {
 #         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
 #     },
 # ]
-
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {
+            'min_length': 3,
+        },
+    },
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
@@ -159,3 +171,14 @@ CKEDITOR_CONFIGS = {
         'filebrowserImageUploadUrl': '/ckeditor/upload/',  # Đường dẫn upload ảnh
     },
 }
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = os.getenv("EMAIL_PORT")
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+print(EMAIL_HOST_USER)
+print(EMAIL_HOST_PASSWORD)
+print(EMAIL_PORT)

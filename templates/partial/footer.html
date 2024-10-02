@@ -54,7 +54,7 @@
 						<ul>
                             {% for post in popular_posts|slice:"3" %}
                             	<li class="flex-wr-sb-s p-b-20">
-								<a href="#" class="size-w-4 wrap-pic-w hov1 trans-03">
+								<a href="{% url 'post_detail' post.id %}" class="size-w-4 wrap-pic-w hov1 trans-03">
 									<img src="{{ post.image.url }}" alt="IMG">
 								</a>
 
@@ -85,7 +85,7 @@
 						<ul class="m-t--12">
                             {% for category in categories|slice:"6" %}
                             	<li class="how-bor1 p-rl-5 p-tb-10">
-								<a href="#" class="f1-s-5 cl11 hov-cl10 trans-03 p-tb-8">
+								<a href="{% url 'category_detail' category.id %}" class="f1-s-5 cl11 hov-cl10 trans-03 p-tb-8">
                                     {{ category.title|capfirst }} ({{ category.post_set.count }})
 								</a>
 							</li>

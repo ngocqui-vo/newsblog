@@ -3,7 +3,7 @@ from django.core.paginator import Paginator
 from django.http import Http404, JsonResponse
 from django.shortcuts import render, get_object_or_404
 from .forms import CommentForm
-from .models import Post, CategoryParent, Category
+from .models import Post, CategoryParent, Category, Tag
 from .helpers import send_contact
 
 def index(request):
@@ -14,7 +14,7 @@ def index(request):
     postsInCategories = list(chain(*[c.post_set.all() for c in categories]))
     latest_posts = Post.objects.all().order_by('-created_at')[:6]
 
-    popular_posts = Post.objects.all().order_by('-views')[:4]
+    popular_posts = Post.objects.filter(is_public=True).order_by('-views')[:4]
     context = {
         'feature_posts': feature_posts,
         'posts': posts,
@@ -55,17 +55,54 @@ def category_parent_detail(request, category_parent_id):
         raise Http404("Category does not exist")
 
     posts = list(chain(*[c.post_set.all() for c in category_parent.category_set.all()]))
+    page_number = request.GET.get('page', 1)
+    paginator = Paginator(posts, 6)
+    page_obj = paginator.page(page_number)
     context = {
-        'category_parent': category_parent,
-        'posts': posts,
+        'category': category_parent,
+        'paginator': paginator,
+        'page_obj': page_obj,
     }
     return render(request, 'blog/category-01.html', context=context)
 
 
+def category_detail(request, category_id):
+    category = Category.objects.get(id=category_id)
+    if category is None:
+        raise Http404("Category does not exist")
+
+    posts = category.post_set.all()
+    page_number = request.GET.get('page', 1)
+    paginator = Paginator(posts, 6)
+    page_obj = paginator.page(page_number)
+    context = {
+        'category': category,
+        'paginator': paginator,
+        'page_obj': page_obj,
+    }
+    return render(request, 'blog/category-01.html', context=context)
+
+
+def tag_detail(request, tag_id):
+    tag = Tag.objects.get(id=tag_id)
+    if tag is None:
+        raise Http404("Tag does not exist")
+
+    posts = tag.posts.all()
+    page_number = request.GET.get('page', 1)
+    paginator = Paginator(posts, 6)
+    page_obj = paginator.page(page_number)
+    context = {
+        'tag': tag,
+        'paginator': paginator,
+        'page_obj': page_obj,
+    }
+    return render(request, 'blog/tag.html', context=context)
+
 def search(request):
     query = request.GET.get('q')
     page_number = request.GET.get('page', 1)
-    posts = Post.objects.filter(title__icontains=query).order_by('-created_at')
+    posts = Post.objects.filter(title__icontains=query, is_public=True).order_by('-created_at')
     paginator = Paginator(posts, 6)
     page_obj = paginator.page(page_number)
     context = {

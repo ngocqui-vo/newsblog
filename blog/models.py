@@ -27,9 +27,11 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     views = models.IntegerField(default=0)
+    is_public = models.BooleanField(default=False)
 
     def __str__(self) -> str:
-        return self.title
+        draft = 'Draft - ' if self.is_public else ''
+        return f'{draft}{self.title}'
 
     def get_excerpt(self, length=100):
         soup = BeautifulSoup(self.content, 'html.parser')

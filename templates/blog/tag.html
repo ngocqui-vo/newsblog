@@ -8,7 +8,7 @@
 	<section class="bg0">
 
 		<div class="container">
-        <h1>{{ category|capfirst }}</h1>
+        <h1>{{ tag.name|capfirst }}</h1>
 
 		</div>
 	</section>
@@ -62,7 +62,7 @@
                                 {{ page_number }}
                             </a>
                         {% endfor %}
-
+                    
 					</div>
 				</div>
 
@@ -89,12 +89,8 @@
 
 						<!-- Most Popular -->
 						{% include 'partial/popular-post.html' %}
-						<!--  -->
-						<div class="flex-c-s p-b-50">
-							<a href="#">
-								<img class="max-w-full" src="images/banner-02.jpg" alt="IMG">
-							</a>
-						</div>
+
+					
 						
 						<!-- Tag -->
 						{% include 'partial/tag.html' %}

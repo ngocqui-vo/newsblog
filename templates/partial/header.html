@@ -231,7 +231,7 @@
                         {#							</li>#}
                         {% for cate_parent in categories_parents %}
                             <li class="mega-menu-item">
-                                <a href="">{{ cate_parent.title|capfirst }}</a>
+                                <a href="{% url 'category_parent_detail' cate_parent.id %}">{{ cate_parent.title|capfirst }}</a>
 
                                 <div class="sub-mega-menu">
                                     <div class="nav flex-column nav-pills" role="tablist">

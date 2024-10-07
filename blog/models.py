@@ -30,7 +30,7 @@ class Post(models.Model):
     is_public = models.BooleanField(default=False)
 
     def __str__(self) -> str:
-        draft = 'Draft - ' if self.is_public else ''
+        draft = 'Draft - ' if not self.is_public else ''
         return f'{draft}{self.title}'
 
     def get_excerpt(self, length=100):

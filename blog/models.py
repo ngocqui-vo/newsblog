@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from ckeditor.fields import RichTextField
 from bs4 import BeautifulSoup
-
+from django.core.validators import FileExtensionValidator
 class CategoryParent(models.Model):
     title = models.CharField(max_length=100)
 
@@ -23,7 +23,7 @@ class Post(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     title = models.CharField(max_length=300)
     content = RichTextField()
-    image = models.ImageField(upload_to='blog/images/', blank=True)
+    image = models.ImageField(upload_to='blog/images/', blank=True, validators=[FileExtensionValidator(['jpg', 'jpeg', 'png'])])
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     views = models.IntegerField(default=0)

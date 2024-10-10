@@ -50,7 +50,7 @@
 
                                 <div class="flex-wr-s-s size-w-0">
                                     {% for tag in post.tag_set.all %}
-                                        <a href="#" class="f1-s-12 cl8 hov-link1 m-r-15">
+                                        <a href="{% url 'tag_detail' tag.id %}" class="f1-s-12 cl8 hov-link1 m-r-15">
                                             {{ tag.name|capfirst }}
                                         </a>
                                     {% endfor %}

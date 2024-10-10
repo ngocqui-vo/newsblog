@@ -65,7 +65,7 @@ def category_detail(request, category_id):
     if category is None:
         raise Http404("Category does not exist")
 
-    posts = category.post_set.filter(is_public=True)
+    posts = category.post_set.filter(is_public=True).order_by('-created_at')
     page_number = request.GET.get('page', 1)
     paginator = Paginator(posts, 6)
     page_obj = paginator.page(page_number)
@@ -82,7 +82,7 @@ def tag_detail(request, tag_id):
     if tag is None:
         raise Http404("Tag does not exist")
 
-    posts = tag.posts.filter(is_public=True)
+    posts = tag.posts.filter(is_public=True).order_by('-created_at')
     page_number = request.GET.get('page', 1)
     paginator = Paginator(posts, 6)
     page_obj = paginator.page(page_number)

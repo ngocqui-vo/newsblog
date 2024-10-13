@@ -27,7 +27,7 @@
                         Contact
                     </a>
                     {% if user.is_authenticated %}
-                        <b class="left-topbar-item">{{ user.username }}</b>
+                        <a class="left-topbar-item" href="{% url 'user_profile' %}">{{ user.username }}</a>
                         <a href="{% url 'user_logout' %}" class="left-topbar-item">
                             Log out
                         </a>

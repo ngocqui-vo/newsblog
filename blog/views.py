@@ -120,6 +120,7 @@ def add_comment(request, post_id):
             return JsonResponse({
                 'success': True,
                 'user': comment.user.username,
+                'image': comment.user.customer.image.url,
                 'content': comment.content,
                 'created_at': comment.created_at.strftime('%Y-%m-%d %H:%M:%S')
             })

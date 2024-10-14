@@ -42,6 +42,7 @@ class UserUpdateForm(forms.ModelForm):
 
 
 class CustomerUpdateForm(forms.ModelForm):
+    image = forms.ImageField(widget=forms.FileInput)
     class Meta:
         model = Customer
         fields = ['phone', 'address', 'image']

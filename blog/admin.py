@@ -56,8 +56,8 @@ class PostAdmin(admin.ModelAdmin):
 
     # Gán user hiện tại cho post khi lưu
     def save_model(self, request, obj, form, change):
-        if not request.user.is_superuser:
-            obj.user = request.user  # Gán user hiện tại vào post
+
+        obj.user = request.user  # Gán user hiện tại vào post
         super().save_model(request, obj, form, change)
 
 # Register your models here.

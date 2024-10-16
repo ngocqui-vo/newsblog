@@ -23,7 +23,7 @@ class Post(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     title = models.CharField(max_length=300)
     content = RichTextField()
-    image = models.ImageField(upload_to='blog/images/', blank=True, validators=[FileExtensionValidator(['jpg', 'jpeg', 'png'])])
+    image = models.ImageField(upload_to='blog/images/', blank=False, null=False, validators=[FileExtensionValidator(['jpg', 'jpeg', 'png'])])
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     views = models.IntegerField(default=0)

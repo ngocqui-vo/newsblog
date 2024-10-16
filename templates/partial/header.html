@@ -229,7 +229,7 @@
                         {#									<li><a href="home-03.html">Homepage v3</a></li>#}
                         {#								</ul>#}
                         {#							</li>#}
-                        {% for cate_parent in categories_parents %}
+                        {% for cate_parent in cat_parents %}
                             <li class="mega-menu-item">
                                 <a href="{% url 'category_parent_detail' cate_parent.id %}">{{ cate_parent.title|capfirst }}</a>
 

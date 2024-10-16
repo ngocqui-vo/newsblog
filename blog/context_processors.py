@@ -3,7 +3,7 @@ from blog.models import CategoryParent, Tag, Post, Category
 
 def categories_parents(request):
     categories = CategoryParent.objects.all()
-    return {'categories_parents': categories}
+    return {'cat_parents': categories}
 
 
 def get_tags(request):

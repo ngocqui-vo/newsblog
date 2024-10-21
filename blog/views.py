@@ -1,9 +1,9 @@
 from itertools import chain
 from django.core.paginator import Paginator
 from django.http import Http404, JsonResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .forms import CommentForm
-from .models import Post, CategoryParent, Category, Tag
+from .models import Post, CategoryParent, Category, Tag, Comment
 from .helpers import send_contact
 
 def index(request):
@@ -122,10 +122,19 @@ def add_comment(request, post_id):
                 'user': comment.user.username,
                 'image': comment.user.customer.image.url,
                 'content': comment.content,
+                'comment_id': comment.id,
                 'created_at': comment.created_at.strftime('%Y-%m-%d %H:%M:%S')
             })
 
     return JsonResponse({'success': False})
+
+
+def delete_comment(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+    if comment is None:
+        raise Http404("Comment does not exist")
+    comment.delete()
+    return redirect('post_detail', post_id=comment.post.id)
 
 
 def contact_us(request):

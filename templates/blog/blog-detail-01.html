@@ -104,7 +104,11 @@
                                                          alt="avatar" width="60"
                                                          height="60"/>
                                                     <div class="ml-3">
-                                                        <h6 class="fw-bold mb-1">{{ comment.user.username }}</h6>
+                                                        <h6 class="fw-bold mb-1">{{ comment.user.username }}
+                                                        {% if comment.user == request.user %}
+                                                        	- <a href="{% url 'delete_comment' comment.id %}">Delete</a>
+                                                        {% endif %}
+                                                        </h6>
                                                         <div class="d-flex align-items-center mb-3">
                                                             <p class="mb-0">
                                                                 {{ comment.created_at|date:"M d" }}, {{ comment.created_at|date:"Y" }}
@@ -334,7 +338,9 @@
                                  src="${response.image}"
                                  alt="avatar" width="60" height="60"/>
                             <div class="ml-3">
-                                <h6 class="fw-bold mb-1">${response.user}</h6>
+                                <h6 class="fw-bold mb-1">${response.user}
+                                    - <a href="/comment/delete/${response.comment_id}">Delete</a>
+                                </h6>
                                 <div class="d-flex align-items-center mb-3">
                                     <p class="mb-0">
                                         ${response.created_at}
